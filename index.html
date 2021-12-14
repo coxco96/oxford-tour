@@ -14,6 +14,10 @@
       padding: 0;
     }
 
+    h1 {
+      font-family: 'Courier New', Courier, monospace;
+    }
+
     #container {
       display: flex;
       flex-direction: row;
@@ -59,22 +63,37 @@
     }
 
     a:hover {
-      background-color: #ddd;
-      color: black;
-    }
-
-    .previous {
-      background-color: #f1f1f1;
-      color: black;
-    }
-
-    .next {
-      background-color: #04AA6D;
+      background-color: rgba(0, 0, 0, 0.8);
       color: white;
     }
 
-    .round {
-      border-radius: 50%;
+    #previous,
+    #next {
+      cursor: pointer;
+      width: auto;
+      color: BLACK;
+      font-weight: bold;
+      font-size: 18px;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+    }
+
+
+
+    .tour-location {
+      display: none;
+      font-family: monospace;
+    }
+
+    img {
+      padding: 10px;
+      margin: auto;
+    }
+
+
+
+    .active {
+      background-color: #717171;
     }
   </style>
 </head>
@@ -84,18 +103,56 @@
     <div id="iiif-map"></div>
     <div id="info-column">
       <h1>Take a tour of the city of Oxford and its unviersity.</h1>
+
       <div id="back-and-forth">
-        <a href="#" class="previous">&#8249; Previous</a>
-        <a href="#" class="next">Next &#8250;</a>
+        <a href="#" id="previous" onclick="plusSlides(-1)">&#8249; Previous</a>
+        <a href="#" id="next" onclick="plusSlides(1)">Next &#8250;</a>
       </div>
+
+      <div id="first-stop" class="tour-location">
+
+        <img src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+          alt="photo of Magdalen College">
+        <div class="text">first one</div>
+
+      </div>
+      <div id="second-stop" class="tour-location"><img
+          src="https://i.guim.co.uk/img/media/dcb0fee186850e5eaf5eebcd6d0589614f830e6e/0_233_3500_2101/master/3500.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=4b06629f2c3f570d0bdff15599909ba8"
+          style="width:100%" alt="photo of Magdalen College">
+        <div class="text">second one</div>
+      </div>
+      <div id="third-stop" class="tour-location"><img
+          src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+          alt="photo of Magdalen College">
+        <div class="text">third one</div>
+      </div>
+      <div id="fourth-stop" class="tour-location"><img
+          src="https://i.guim.co.uk/img/media/dcb0fee186850e5eaf5eebcd6d0589614f830e6e/0_233_3500_2101/master/3500.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=4b06629f2c3f570d0bdff15599909ba8"
+          style="width:100%" alt="photo of Magdalen College">
+        <div class="text">fourth one</div>
+      </div>
+      <div id="fifth-stop" class="tour-location"><img
+          src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+          alt="photo of Magdalen College">
+        <div class="text">fifth one</div>
+      </div>
+
+
     </div>
-  </div>
-  <div id="current-view">
-    Current bounds:<br />
-    <div id="current-bounds"></div>
-  </div>
-  <div id="ui">
-    <button id="zoom-to-full-screen">Back to full screen map</button>
+
+
+
+    <div id="current-view">
+      Current bounds:<br />
+      <div id="current-bounds"></div>
+    </div>
+    <div id="ui">
+      <button id="zoom-to-full-screen">Back to full screen map</button>
+    </div>
+
+
+
+
   </div>
 
 
@@ -141,62 +198,208 @@
       });
 
 
+
+
+
     oxfordLocations = {
-        id: {
+      id: {
 
-          1: {
-            name: "Magdalen College",
-            latlng: [
-              [-464.3, 635.7],
-              [-224.8, 945.7]
-            ],
-            description: "",
-            mapNum:  1
-          },
+        1: {
+          name: "Magdalen College",
+          latlng: [
+            [-464.3, 635.7],
+            [-224.8, 945.7]
+          ],
+          description: "",
+          mapNum: 1
+        },
 
-         2: {
-            name: "All Souls",
-            latlng: [
-              [-303.6, 467.4],
-              [-183.8, 622.4]
-            ],
-            description: "",
-            mapNum: 7
-          },
+        2: {
+          name: "All Souls",
+          latlng: [
+            [-303.6, 467.4],
+            [-183.8, 622.4]
+          ],
+          description: "",
+          mapNum: 7
+        },
 
-         3: {
-           name: "Radcliffe Library",
-            latlng: [
-              [-295.5, 430.9],
-              [-191.3, 565.8]
-            ],
-            description: "",
-            mapNum: 11
-          },
+        3: {
+          name: "Radcliffe Library",
+          latlng: [
+            [-295.5, 430.9],
+            [-191.3, 565.8]
+          ],
+          description: "",
+          mapNum: 11
+        },
 
-          5: {
-           name: "Bodleian D.",
-            latlng: [
-              [-282.2, 448],
-              [-162.5, 603]
-            ],
-            description: "",
-            mapNum: 12
-          },
+        4: {
+          name: "Bodleian D.",
+          latlng: [
+            [-282.2, 448],
+            [-162.5, 603]
+          ],
+          description: "",
+          mapNum: 12
+        },
 
-        }
+        5: {
+          name: "The Market",
+
+          latlng: [
+            [-288.7, 236.6],
+            [-145.5, 421.2]
+          ],
+          description: "",
+          mapNum: 16
+        },
+
+      }
+    }
+
+
+    // logs name of each location
+   // for (const key in oxfordLocations.id) {
+      //console.log(oxfordLocations.id[key]["latlng"]);
+      //console.log(oxfordLocations.id[key]["latlng"])
+    //}
+  //  let newArr = Object.values(oxfordLocations.id[1]["latlng"]);
+  //  console.log(newArr);
+  //   console.log(Object.values(newArr));
+
+
+    console.log(showSlides(7));
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // functions
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("tour-location");
+
+
+      // how many locations do we have?
+      console.log(slides.length);
+
+      if (n > slides.length) {
+        slideIndex = 1
+      }
+      if (n < 1) {
+        slideIndex = slides.length
+      }
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
       }
 
-//console.log(Object.keys(oxfordLocations.id));
+      slides[slideIndex - 1].style.display = "block";
+
+      // if we are on first location, take us to the second location on "next" click.
+      if (slideIndex == 1) {
+        console.log("hey!");
+        document
+          .getElementById("next")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+            Object.values(oxfordLocations.id[2]["latlng"])
+            ]);
+          });
+      } else if (slideIndex == 2) {
+        document
+          .getElementById("next")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-295.5, 430.9],
+              // [-191.3, 565.8]
+              Object.values(oxfordLocations.id[3]["latlng"])
+            ]);
+          }),
+          document
+          .getElementById("previous")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-303.6, 467.4],
+              // [-183.8, 622.4]
+              Object.values(oxfordLocations.id[1]["latlng"])
+            ]);
+          });
+      } else if (slideIndex == 3) {
+        document
+          .getElementById("next")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-295.5, 430.9],
+              // [-191.3, 565.8]
+              Object.values(oxfordLocations.id[4]["latlng"])
+            ]);
+          }),
+          document
+          .getElementById("previous")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-303.6, 467.4],
+              // [-183.8, 622.4]
+              Object.values(oxfordLocations.id[2]["latlng"])
+            ]);
+          });
+      } else if (slideIndex == 4) {
+        document
+          .getElementById("next")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-295.5, 430.9],
+              // [-191.3, 565.8]
+              Object.values(oxfordLocations.id[5]["latlng"])
+            ]);
+          }),
+          document
+          .getElementById("previous")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-303.6, 467.4],
+              // [-183.8, 622.4]
+              Object.values(oxfordLocations.id[3]["latlng"])
+            ]);
+          });
+      } else if (slideIndex == 5) {
+        document
+          .getElementById("next")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-295.5, 430.9],
+              // [-191.3, 565.8]
+              Object.values(oxfordLocations.id[1]["latlng"])
+            ]);
+          }),
+          document
+          .getElementById("previous")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              // [-303.6, 467.4],
+              // [-183.8, 622.4]
+              Object.values(oxfordLocations.id[4]["latlng"])
+            ]);
+          });
+      }
 
 
-// returns name of each location
-for (const key in oxfordLocations.id) {
-  console.log(oxfordLocations.id[key]["name"]);
-  //console.log(oxfordLocations.id[key]["latlng"])
-}
 
 
+    }
+
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
   </script>
 </body>
 
