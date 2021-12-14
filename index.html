@@ -1,96 +1,203 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>My map</title>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""
-    />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      #iiif-map {
-        position: absolute;
-        width: 100%;
-        top: 0;
-        bottom: 0;
-      }
-      #current-view {
-        position: absolute;
-        left: 60px;
-        top: 12px;
-        z-index: 1000;
-        background: whitesmoke;
-        padding: 8px 12px;
-      }
 
-      #ui {
-        position: absolute;
-        left: 12px;
-        bottom: 12px;
-        z-index: 1000;
-        background: whitesmoke;
-        padding: 8px 12px;
-      }
-    </style>
-  </head>
+<head>
+  <title>My map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-  <body>
+    #container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    #iiif-map {
+      height: 100vh;
+      width: 70%;
+      top: 0;
+      bottom: 0;
+    }
+
+    #info-column {
+      width: 30%;
+      color: black;
+      background-color: lightcyan;
+      padding: 1em;
+    }
+
+    #current-view {
+      position: absolute;
+      left: 60px;
+      top: 12px;
+      z-index: 1000;
+      background: whitesmoke;
+      padding: 8px 12px;
+    }
+
+    #ui {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      z-index: 1000;
+      background: whitesmoke;
+      padding: 8px 12px;
+    }
+
+    a {
+      text-decoration: none;
+      display: inline-block;
+      padding: 8px 16px;
+    }
+
+    a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .previous {
+      background-color: #f1f1f1;
+      color: black;
+    }
+
+    .next {
+      background-color: #04AA6D;
+      color: white;
+    }
+
+    .round {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id=container>
     <div id="iiif-map"></div>
-    <div id="current-view">
-      Current bounds:<br />
-      <div id="current-bounds"></div>
+    <div id="info-column">
+      <h1>Take a tour of the city of Oxford and its unviersity.</h1>
+      <div id="back-and-forth">
+        <a href="#" class="previous">&#8249; Previous</a>
+        <a href="#" class="next">Next &#8250;</a>
+      </div>
     </div>
-    <div id="ui">
-      <button id="zoom-to-legend">Zoom in on the legend</button>
-    </div>
+  </div>
+  <div id="current-view">
+    Current bounds:<br />
+    <div id="current-bounds"></div>
+  </div>
+  <div id="ui">
+    <button id="zoom-to-full-screen">Back to full screen map</button>
+  </div>
 
-    <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""
-    ></script>
-    <!-- make sure to import Leaflet-IIIF *after* the main Leaflet package -->
-    <script src="https://cdn.rawgit.com/mejackreed/Leaflet-IIIF/v3.0.0/leaflet-iiif.js"></script>
 
-    <script>
-      
-      const map = L.map("iiif-map", {
-        center: [0, 0],
-        crs: L.CRS.Simple,
-        zoom: 0,
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  <!-- make sure to import Leaflet-IIIF *after* the main Leaflet package -->
+  <script src="https://cdn.rawgit.com/mejackreed/Leaflet-IIIF/v3.0.0/leaflet-iiif.js"></script>
+
+  <script>
+    const map = L.map("iiif-map", {
+      center: [0, 0],
+      crs: L.CRS.Simple,
+      zoom: 2,
+      maxZoom: 1,
+      zoomSnap: .2
+    });
+
+    map.setMaxZoom(3.2);
+
+    const chamizalLayer = new L.tileLayer.iiif(
+      "https://iiif.digitalcommonwealth.org/iiif/2/commonwealth:k643f906k/info.json"
+    ).addTo(map);
+
+
+
+    map.on("moveend", () => {
+      // returns 'southwest_lng,southwest_lat,northeast_lng,northeast_lat' of current view
+      const currentBounds = map.getBounds().toBBoxString();
+
+      // output current bounds to screen
+      document.getElementById("current-bounds").innerText = currentBounds;
+    });
+
+    document
+      .getElementById("zoom-to-full-screen")
+      .addEventListener("click", () => {
+        map.flyToBounds([
+          [-550.49, 0],
+          [-71.49, 902],
+        ]);
       });
 
-      const chamizalLayer = new L.tileLayer.iiif(
-        "https://iiif.digitalcommonwealth.org/iiif/2/commonwealth:k643f906k/info.json"
-      ).addTo(map);
 
-      map.on("moveend", () => {
-        // returns 'southwest_lng,southwest_lat,northeast_lng,northeast_lat' of current view
-        const currentBounds = map.getBounds().toBBoxString();
+    oxfordLocations = {
+        id: {
 
-        // output current bounds to screen
-        document.getElementById("current-bounds").innerText = currentBounds;
-      });
+          1: {
+            name: "Magdalen College",
+            latlng: [
+              [-464.3, 635.7],
+              [-224.8, 945.7]
+            ],
+            description: "",
+            mapNum:  1
+          },
 
-      document
-        .getElementById("zoom-to-legend")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            [-584, 12],
-            [-284, 312],
-          ]);
-        });
-    
-    </script>
-  </body>
+         2: {
+            name: "All Souls",
+            latlng: [
+              [-303.6, 467.4],
+              [-183.8, 622.4]
+            ],
+            description: "",
+            mapNum: 7
+          },
+
+         3: {
+           name: "Radcliffe Library",
+            latlng: [
+              [-295.5, 430.9],
+              [-191.3, 565.8]
+            ],
+            description: "",
+            mapNum: 11
+          },
+
+          5: {
+           name: "Bodleian D.",
+            latlng: [
+              [-282.2, 448],
+              [-162.5, 603]
+            ],
+            description: "",
+            mapNum: 12
+          },
+
+        }
+      }
+
+//console.log(Object.keys(oxfordLocations.id));
+
+
+// returns name of each location
+for (const key in oxfordLocations.id) {
+  console.log(oxfordLocations.id[key]["name"]);
+  //console.log(oxfordLocations.id[key]["latlng"])
+}
+
+
+  </script>
+</body>
+
 </html>
