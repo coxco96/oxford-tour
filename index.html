@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>My map</title>
+  <title>Oxford Tour</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -34,7 +34,7 @@
     #info-column {
       width: 20%;
       color: black;
-      background-color: lightcyan;
+      background-color: #DFCBB0;
       padding: 1em;
     }
 
@@ -49,20 +49,18 @@
 
     #ui {
       position: absolute;
-      left: 12px;
+      right: 12px;
       bottom: 12px;
       z-index: 1000;
-      background: whitesmoke;
-      padding: 8px 12px;
     }
 
-    a {
+    .back-and-forth {
       text-decoration: none;
       display: inline-block;
       padding: 8px 16px;
     }
 
-    a:hover {
+    .back-and-forth:hover {
       background-color: rgba(0, 0, 0, 0.8);
       color: white;
     }
@@ -95,6 +93,20 @@
     .active {
       background-color: #717171;
     }
+
+    #tour-image {
+      width: 96%;
+      margin: auto;
+      /* height: 50%; */
+    }
+
+    #main-image {
+      width: 96%;
+      margin: auto;
+    }
+    figcaption {
+      text-align: center;
+    }
     
   </style>
 </head>
@@ -106,17 +118,18 @@
       
       <h1 id="welcome">Take a tour of the city of Oxford and its unviersity.</h1>
       <div id="back-and-forth">
-        <a href="#" id="previous" onclick="plusSlides(-1)">&#8249; Previous</a>
-        <a href="#" id="next" onclick="plusSlides(1)">Next &#8250;</a>
+        <a class="back-and-forth" href="#" id="previous" onclick="plusSlides(-1)">&#8249; Previous</a>
+        <a class="back-and-forth" href="#" id="next" onclick="plusSlides(1)">Next &#8250;</a>
       </div>
-      <img id="tour-image" src="https://i.guim.co.uk/img/media/dcb0fee186850e5eaf5eebcd6d0589614f830e6e/0_233_3500_2101/master/3500.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=4b06629f2c3f570d0bdff15599909ba8" style="width:100%">
-
+      <figure id="main-image">
+      <img id="tour-image" src="images/id1.jpg">
+      <figcaption id="image-creds">Image found <a href="#">here</a>.</figcaption>
+      </figure>
       
 
      
       <div class="tour-location">
         <div class="text">first one</div>
-
       </div>
       <div class="tour-location">
         <div class="text">second one</div>
@@ -273,8 +286,11 @@
             ]);
           }),
           document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[1]["name"]}`,
-          document.getElementById("tour-image").src = "images/id1.jpg";
+          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[1]["name"]}`;
+          document.getElementById("tour-image").src = oxfordLocations.id[1]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[1]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[1]["image"]["credit"]}">here</a>.`
+
       } else if (slideIndex == 2) {
         document
           .getElementById("next")
@@ -292,7 +308,9 @@
           }),
           document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[2]["name"]}`,
-          document.getElementById("tour-image").src = "images/id2.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[2]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[2]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[2]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 3) {
         document
           .getElementById("next")
@@ -310,7 +328,9 @@
           }),
           document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[3]["name"]}`,
-          document.getElementById("tour-image").src = "images/id3.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[3]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[3]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[3]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 4) {
         document
           .getElementById("next")
@@ -328,7 +348,9 @@
           }),
           document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[4]["name"]}`,
-          document.getElementById("tour-image").src = "images/id4.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[4]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[4]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[4]["image"]["credit"]}">here</a> and was originally taken by Vinesh Rajpaul.`
       } else if (slideIndex == 5) {
         document
           .getElementById("next")
@@ -346,7 +368,9 @@
           }),
           document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[5]["name"]}`, 
-          document.getElementById("tour-image").src = "images/id5.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[5]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[5]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[5]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 6) {
         document
           .getElementById("next")
@@ -364,7 +388,9 @@
           }),
           document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[6]["name"]}`,
-          document.getElementById("tour-image").src = "images/id6.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[6]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[6]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[6]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 7) {
         document
         .getElementById("next")
@@ -382,7 +408,9 @@
         }),
         document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[7]["name"]}`,
-          document.getElementById("tour-image").src = "images/id7.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[7]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[7]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[7]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 8) {
         document
         .getElementById("next")
@@ -400,7 +428,9 @@
         }),
         document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[8]["name"]}`,
-          document.getElementById("tour-image").src = "images/id8.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[8]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[8]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[8]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 9) {
         document
         .getElementById("next")
@@ -418,7 +448,9 @@
         }),
         document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[9]["name"]}`,
-          document.getElementById("tour-image").src = "images/id9.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[9]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[9]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[9]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 10) {
         document
         .getElementById("next")
@@ -436,7 +468,9 @@
         }),
         document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[10]["name"]}`,
-          document.getElementById("tour-image").src = "images/id10.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[10]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[10]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[10]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 11) {
         document
         .getElementById("next")
@@ -454,7 +488,9 @@
         }),
         document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[11]["name"]}`,
-          document.getElementById("tour-image").src = "images/id11.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[11]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[11]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[11]["image"]["credit"]}">here</a>.`
       } else if (slideIndex == 12) {
         document
         .getElementById("next")
@@ -472,7 +508,9 @@
         }),
         document
           .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[12]["name"]}`,
-          document.getElementById("tour-image").src = "images/id12.jpg";
+          document.getElementById("tour-image").src = oxfordLocations.id[12]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[12]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[12]["image"]["credit"]}">here</a>.`
       }
 
     }

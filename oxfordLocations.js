@@ -12,8 +12,8 @@ oxfordLocations = {
       mapNum: 1,
       image: {
         src: "images/id1.jpg",
-        alt: "Magdalen College, light brick historic building surrounded by bright greenery",
-        credit: "https://www.britainexpress.com/cities/oxford/magdalen.htm"
+        alt: "",
+        credit: ""
       }
     },
 
@@ -26,9 +26,9 @@ oxfordLocations = {
       description: "",
       mapNum: 7,
       image: {
-        src: "",
-        alt: "",
-        credit: ""
+        src: "images/id2.jpg",
+        alt: "drone perspective of All Souls College old buildings and green courtyard with horizon line visible",
+        credit: "https://artuk.org/visit/venues/all-souls-college-university-of-oxford-7507"
       }
     },
 
@@ -41,9 +41,9 @@ oxfordLocations = {
       description: "",
       mapNum: 11,
       image: {
-        src: "",
-        alt: "",
-        credit: ""
+        src: "images/id3.jpg",
+        alt: "concentric tiered grand library",
+        credit: "https://en.wikipedia.org/wiki/Radcliffe_Camera#/media/File:Radcliffe_Camera,_Oxford_-_Oct_2006.jpg"
       }
     },
 
@@ -56,9 +56,9 @@ oxfordLocations = {
       description: "",
       mapNum: 12,
       image: {
-        src: "",
-        alt: "",
-        credit: ""
+        src: "images/id4.jpg",
+        alt: "inside view of Bodleian library with tables in straight line through middle and bookshelves on either side",
+        credit: "https://medium.com/oxford-university/seven-things-you-probably-didnt-know-about-oxford-s-libraries-38ed3748add"
       }
     },
 
@@ -71,7 +71,7 @@ oxfordLocations = {
       description: "",
       mapNum: 16,
       image: {
-        src: "",
+        src: "images/id5.jpg",
         alt: "",
         credit: ""
       }
@@ -86,7 +86,7 @@ oxfordLocations = {
       description: "",
       mapNum: 22,
       image: {
-        src: "",
+        src: "images/id6.jpg",
         alt: "",
         credit: ""
       }
@@ -101,7 +101,7 @@ oxfordLocations = {
       description: "",
       mapNum: 28,
       image: {
-        src: "",
+        src: "images/id7.jpg",
         alt: "",
         credit: ""
       }
@@ -116,7 +116,7 @@ oxfordLocations = {
       description: "",
       mapNum: 31,
       image: {
-        src: "",
+        src: "images/id8.jpg",
         alt: "",
         credit: ""
       }
@@ -131,7 +131,7 @@ oxfordLocations = {
       description: "",
       mapNum: 41,
       image: {
-        src: "",
+        src: "images/id9.jpg",
         alt: "",
         credit: ""
       }
@@ -147,7 +147,7 @@ oxfordLocations = {
       description: "",
       mapNum: 52,
       image: {
-        src: "",
+        src: "images/id10.jpg",
         alt: "",
         credit: ""
       }
@@ -163,7 +163,7 @@ oxfordLocations = {
       description: "",
       mapNum: 58,
       image: {
-        src: "",
+        src: "images/id11.jpg",
         alt: "",
         credit: ""
       }
@@ -179,7 +179,7 @@ oxfordLocations = {
       description: "",
       mapNum: 58,
       image: {
-        src: "",
+        src: "images/id12.jpg",
         alt: "",
         credit: ""
       }
