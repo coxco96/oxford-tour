@@ -26,13 +26,13 @@
 
     #iiif-map {
       height: 100vh;
-      width: 70%;
+      width: 80%;
       top: 0;
       bottom: 0;
     }
 
     #info-column {
-      width: 30%;
+      width: 20%;
       color: black;
       background-color: lightcyan;
       padding: 1em;
@@ -136,6 +136,32 @@
           alt="photo of Magdalen College">
         <div class="text">fifth one</div>
       </div>
+      <div id="sixth-stop" class="tour-location"><img
+        src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+        alt="photo of Magdalen College">
+      <div class="text">sixth one</div>
+      </div>
+      <div id="seventh-stop" class="tour-location"><img
+        src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+        alt="photo of Magdalen College">
+      <div class="text">seventh one</div>
+      </div>
+      <div id="eighth-stop" class="tour-location"><img
+        src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+        alt="photo of Magdalen College">
+      <div class="text">eighth one</div>
+      </div>
+      <div id="ninth-stop" class="tour-location"><img
+        src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+        alt="photo of Magdalen College">
+      <div class="text">ninth one</div>
+      </div>
+      <div id="tenth-stop" class="tour-location"><img
+        src="https://www.britainexpress.com/images/attractions/editor3/Magdalene-7814.jpg" style="width:100%"
+        alt="photo of Magdalen College">
+      <div class="text">tenth one</div>
+      </div>
+      
 
 
     </div>
@@ -162,27 +188,32 @@
     crossorigin=""></script>
   <!-- make sure to import Leaflet-IIIF *after* the main Leaflet package -->
   <script src="https://cdn.rawgit.com/mejackreed/Leaflet-IIIF/v3.0.0/leaflet-iiif.js"></script>
+  <script src="oxfordLocations.js"></script>
 
   <script>
     const map = L.map("iiif-map", {
-      center: [0, 0],
+     // center: [0, 0],
+      center: [-274.78, 407.89],
       crs: L.CRS.Simple,
-      zoom: 2,
+      zoom: 1.2,
       maxZoom: 1,
       zoomSnap: .2
     });
 
     map.setMaxZoom(3.2);
+    //map.setZoom(1.2);
 
     const chamizalLayer = new L.tileLayer.iiif(
       "https://iiif.digitalcommonwealth.org/iiif/2/commonwealth:k643f906k/info.json"
     ).addTo(map);
 
-
+  
 
     map.on("moveend", () => {
       // returns 'southwest_lng,southwest_lat,northeast_lng,northeast_lat' of current view
       const currentBounds = map.getBounds().toBBoxString();
+
+      console.log(map.getCenter());
 
       // output current bounds to screen
       document.getElementById("current-bounds").innerText = currentBounds;
@@ -199,66 +230,6 @@
 
 
 
-
-
-    oxfordLocations = {
-      id: {
-
-        1: {
-          name: "Magdalen College",
-          latlng: [
-            [-464.3, 635.7],
-            [-224.8, 945.7]
-          ],
-          description: "",
-          mapNum: 1
-        },
-
-        2: {
-          name: "All Souls",
-          latlng: [
-            [-303.6, 467.4],
-            [-183.8, 622.4]
-          ],
-          description: "",
-          mapNum: 7
-        },
-
-        3: {
-          name: "Radcliffe Library",
-          latlng: [
-            [-295.5, 430.9],
-            [-191.3, 565.8]
-          ],
-          description: "",
-          mapNum: 11
-        },
-
-        4: {
-          name: "Bodleian D.",
-          latlng: [
-            [-282.2, 448],
-            [-162.5, 603]
-          ],
-          description: "",
-          mapNum: 12
-        },
-
-        5: {
-          name: "The Market",
-
-          latlng: [
-            [-288.7, 236.6],
-            [-145.5, 421.2]
-          ],
-          description: "",
-          mapNum: 16
-        },
-
-      }
-    }
-
-
     // logs name of each location
    // for (const key in oxfordLocations.id) {
       //console.log(oxfordLocations.id[key]["latlng"]);
@@ -269,9 +240,7 @@
   //   console.log(Object.values(newArr));
 
 
-    console.log(showSlides(7));
-
-    var slideIndex = 1;
+    let slideIndex = 1;
     showSlides(slideIndex);
 
     // functions
@@ -284,7 +253,7 @@
 
     function showSlides(n) {
       let i;
-      let slides = document.getElementsByClassName("tour-location");
+      const slides = document.getElementsByClassName("tour-location");
 
 
       // how many locations do we have?
@@ -304,7 +273,6 @@
 
       // if we are on first location, take us to the second location on "next" click.
       if (slideIndex == 1) {
-        console.log("hey!");
         document
           .getElementById("next")
           .addEventListener("click", () => {
@@ -363,9 +331,7 @@
           document
           .getElementById("previous")
           .addEventListener("click", () => {
-            map.flyToBounds([
-              // [-303.6, 467.4],
-              // [-183.8, 622.4]
+            map.flyToBounds([            
               Object.values(oxfordLocations.id[3]["latlng"])
             ]);
           });
@@ -374,24 +340,77 @@
           .getElementById("next")
           .addEventListener("click", () => {
             map.flyToBounds([
-              // [-295.5, 430.9],
-              // [-191.3, 565.8]
-              Object.values(oxfordLocations.id[1]["latlng"])
+              Object.values(oxfordLocations.id[6]["latlng"])
             ]);
           }),
           document
           .getElementById("previous")
           .addEventListener("click", () => {
             map.flyToBounds([
-              // [-303.6, 467.4],
-              // [-183.8, 622.4]
               Object.values(oxfordLocations.id[4]["latlng"])
             ]);
           });
+      } else if (slideIndex == 6) {
+        document
+          .getElementById("next")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              Object.values(oxfordLocations.id[7]["latlng"])
+            ]);
+          }),
+          document
+          .getElementById("previous")
+          .addEventListener("click", () => {
+            map.flyToBounds([
+              Object.values(oxfordLocations.id[5]["latlng"])
+            ]);
+          });
+      } else if (slideIndex == 7) {
+        document
+        .getElementById("next")
+        .addEventListener("click", () => {
+          map.flyToBounds([
+            Object.values(oxfordLocations.id[8]["latlng"])
+          ])
+        }),
+        document
+        .getElementById("previous")
+        .addEventListener("click", () => {
+          map.flyToBounds([
+            Object.values(oxfordLocations.id[6]["latlng"])
+          ])
+        })
+      } else if (slideIndex == 9) {
+        document
+        .getElementById("next")
+        .addEventListener("click", () => {
+          map.flyToBounds([
+            Object.values(oxfordLocations.id[10]["latlng"])
+          ])
+        }),
+        document
+        .getElementById("previous")
+        .addEventListener("click", () => {
+          map.flyToBounds([
+            Object.values(oxfordLocations.id[8]["latlng"])
+          ])
+        })
+      } else if (slideIndex == 10) {
+        document
+        .getElementById("next")
+        .addEventListener("click", () => {
+          map.flyToBounds([
+            Object.values(oxfordLocations.id[1]["latlng"])
+          ])
+        }),
+        document
+        .getElementById("previous")
+        .addEventListener("click", () => {
+          map.flyToBounds([
+            Object.values(oxfordLocations.id[9]["latlng"])
+          ])
+        })
       }
-
-
-
 
     }
 
