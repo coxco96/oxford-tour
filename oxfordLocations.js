@@ -72,8 +72,8 @@ oxfordLocations = {
       mapNum: 16,
       image: {
         src: "images/id5.jpg",
-        alt: "",
-        credit: ""
+        alt: "flowers, hall, and shops framed in covered market space",
+        credit: "https://commons.wikimedia.org/wiki/File:Oxford_-_Covered_Market_-_0127.jpg"
       }
     },
 
@@ -87,8 +87,8 @@ oxfordLocations = {
       mapNum: 22,
       image: {
         src: "images/id6.jpg",
-        alt: "",
-        credit: ""
+        alt: "stone castle and blue sky",
+        credit: "https://www.viator.com/en-PH/tours/Oxford/Oxford-Castle-Unlocked-Entrance-Ticket-Including-Guided-Tour/d5537-31897P1"
       }
     },
 
