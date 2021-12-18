@@ -103,7 +103,7 @@ oxfordLocations = {
       image: {
         src: "images/id7.jpg",
         alt: "",
-        credit: ""
+        credit: "https://commons.wikimedia.org/w/index.php?curid=90518916"
       }
     },
 
@@ -117,8 +117,8 @@ oxfordLocations = {
       mapNum: 31,
       image: {
         src: "images/id8.jpg",
-        alt: "",
-        credit: ""
+        alt: "dark stone pavement, lighter stone building and a relatively smaller statue/marker",
+        credit: "https://en.wikipedia.org/wiki/Corpus_Christi_College,_Oxford#/media/File:UK-2014-Oxford-Corpus_Christi_College_02.jpg"
       }
     },
 
@@ -132,8 +132,8 @@ oxfordLocations = {
       mapNum: 41,
       image: {
         src: "images/id9.jpg",
-        alt: "",
-        credit: ""
+        alt: "Straight on view of building that says Oxford Printing Press and with gate entrance in middle",
+        credit: "https://en.wikipedia.org/wiki/Oxford_University_Press#/media/File:Oxford_University_Press_Building_%E2%80%93_Walton_Street.jpg"
       }
     },
 
@@ -148,8 +148,8 @@ oxfordLocations = {
       mapNum: 52,
       image: {
         src: "images/id10.jpg",
-        alt: "",
-        credit: ""
+        alt: "tall monument with steps at the base, people are sitting on the steps",
+        credit: "https://www.britainexpress.com/cities/oxford/martyrs.htm"
       }
     },
 
@@ -164,8 +164,8 @@ oxfordLocations = {
       mapNum: 58,
       image: {
         src: "images/id11.jpg",
-        alt: "",
-        credit: ""
+        alt: "museum entrance with flags and people outside",
+        credit: "https://commons.wikimedia.org/w/index.php?curid=77717785"
       }
     },
 
@@ -181,7 +181,7 @@ oxfordLocations = {
       image: {
         src: "images/id12.jpg",
         alt: "",
-        credit: ""
+        credit: "https://en.wikipedia.org/wiki/Sheldonian_Theatre#/media/File:Oxford_Building_Sunset.jpg"
       }
     }
 
