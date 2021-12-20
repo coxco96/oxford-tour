@@ -45,6 +45,8 @@
       z-index: 1000;
       background: whitesmoke;
       padding: 8px 12px;
+      display: none;
+      /* change display to show current bounds of map view */
     }
 
     #ui {
@@ -104,10 +106,10 @@
       width: 96%;
       margin: auto;
     }
+
     figcaption {
       text-align: center;
     }
-    
   </style>
 </head>
 
@@ -115,19 +117,19 @@
   <div id=container>
     <div id="iiif-map"></div>
     <div id="info-column">
-      
+
       <h1 id="welcome">Take a tour of the city of Oxford and its unviersity.</h1>
       <div id="back-and-forth">
         <a class="back-and-forth" href="#" id="previous" onclick="plusSlides(-1)">&#8249; Previous</a>
         <a class="back-and-forth" href="#" id="next" onclick="plusSlides(1)">Next &#8250;</a>
       </div>
       <figure id="main-image">
-      <img id="tour-image" src="images/id1.jpg">
-      <figcaption id="image-creds">Image found <a href="#">here</a>.</figcaption>
+        <img id="tour-image" src="images/id1.jpg">
+        <figcaption id="image-creds">Image found <a href="#">here</a>.</figcaption>
       </figure>
-      
 
-     
+
+
       <div class="tour-location">
         <div class="text">first one</div>
       </div>
@@ -144,37 +146,40 @@
         <div class="text">fifth one</div>
       </div>
       <div class="tour-location">
-      <div class="text">sixth one</div>
+        <div class="text">sixth one</div>
       </div>
       <div class="tour-location">
-      <div class="text">seventh one</div>
+        <div class="text">seventh one</div>
       </div>
       <div class="tour-location">
-      <div class="text">eighth one</div>
+        <div class="text">eighth one</div>
       </div>
       <div class="tour-location">
-      <div class="text">ninth one</div>
+        <div class="text">ninth one</div>
       </div>
       <div class="tour-location">
-      <div class="text">tenth one</div>
+        <div class="text">tenth one</div>
       </div>
       <div class="tour-location">
-      <div class="text">eleventh one</div>
+        <div class="text">eleventh one</div>
       </div>
       <div class="tour-location">
-      <div class="text">twelfth one</div>
+        <div class="text">twelfth one</div>
       </div>
-      
+
 
 
     </div>
 
 
+    <!-- uncomment to show current bounds: -->
 
     <div id="current-view">
       Current bounds:<br />
       <div id="current-bounds"></div>
     </div>
+
+
     <div id="ui">
       <button id="zoom-to-full-screen">Back to full screen map</button>
     </div>
@@ -195,7 +200,7 @@
 
   <script>
     const map = L.map("iiif-map", {
-     // center: [0, 0],
+      // center: [0, 0],
       center: [-274.78, 407.89],
       crs: L.CRS.Simple,
       zoom: 1.2,
@@ -210,13 +215,13 @@
       "https://iiif.digitalcommonwealth.org/iiif/2/commonwealth:k643f906k/info.json"
     ).addTo(map);
 
-  
+
 
     map.on("moveend", () => {
       // returns 'southwest_lng,southwest_lat,northeast_lng,northeast_lat' of current view
       const currentBounds = map.getBounds().toBBoxString();
 
-      console.log(map.getCenter());
+      //   console.log(map.getCenter());
 
       // output current bounds to screen
       document.getElementById("current-bounds").innerText = currentBounds;
@@ -233,285 +238,77 @@
 
 
 
-    // logs name of each location
-   // for (const key in oxfordLocations.id) {
-      //console.log(oxfordLocations.id[key]["latlng"]);
-      //console.log(oxfordLocations.id[key]["latlng"])
-    //}
-  //  let newArr = Object.values(oxfordLocations.id[1]["latlng"]);
-  //  console.log(newArr);
-  //   console.log(Object.values(newArr));
 
-
-    let slideIndex = 1;
+    let slideIndex = 0;
     showSlides(slideIndex);
 
     // functions
 
-    // Thumbnail image controls
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
 
-
+    // this function runs each time the next or previous button is clicked
+    // the first time it runs, it runs as showSlides(0)
     function showSlides(n) {
       let i;
       const slides = document.getElementsByClassName("tour-location");
 
-
       // how many locations do we have?
-      console.log(slides.length);
+      //console.log(slides.length);
+      // if we are on the last location, reset to the first one
+      if (n > slides.length-1) {
+        slideIndex = 0
+      }
+      // if we are on the first location and "previous" gets clicked, send to the last location
+      if (n < 0) {
+        slideIndex = slides.length -1
+      }
 
-      if (n > slides.length) {
-        slideIndex = 1
-      }
-      if (n < 1) {
-        slideIndex = slides.length
-      }
       for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
+        console.log(slideIndex);
+        if (slideIndex == i) {
+          document
+            .getElementById("next")
+            .addEventListener("click", () => {
+
+              if (i < slides.length - 1) {
+                map.flyToBounds([
+                  Object.values(oxfordLocations.id[i+1]["latlng"])
+                ])
+                // if you're on the last location:
+              } else {
+                map.flyToBounds([
+                  Object.values(oxfordLocations.id[0]["latlng"])
+                ])
+              }
+            }),
+            document
+            .getElementById("previous")
+            .addEventListener("click", () => {
+              // if you're on the first location
+              if (i == 0) {
+                map.flyToBounds([
+                  Object.values(oxfordLocations.id[slides.length - 1]["latlng"])
+                ])
+                // if you're not on the first location
+              } else {
+                map.flyToBounds([
+                  Object.values(oxfordLocations.id[i - 1]["latlng"])
+                ]);
+              }
+
+
+            }),
+          document.getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[i]["name"]}`;
+          document.getElementById("tour-image").src = oxfordLocations.id[i]["image"]["src"];
+          document.getElementById("tour-image").alt = oxfordLocations.id[i]["image"]["alt"];
+          document.getElementById("image-creds").innerHTML =
+            `Image found <a href="${oxfordLocations.id[i]["image"]["credit"]}">here</a>.`
+        }
       }
+
 
       console.log(slideIndex);
-
-      slides[slideIndex - 1].style.display = "block";
-
-      // if we are on first location, take us to the second location on "next" click.
-      if (slideIndex == 1) {
-        document
-          .getElementById("next")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-            Object.values(oxfordLocations.id[2]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[1]["name"]}`;
-          document.getElementById("tour-image").src = oxfordLocations.id[1]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[1]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[1]["image"]["credit"]}">here</a>.`
-
-      } else if (slideIndex == 2) {
-        document
-          .getElementById("next")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[3]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("previous")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[1]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[2]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[2]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[2]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[2]["image"]["credit"]}">here</a>.`
-      } else if (slideIndex == 3) {
-        document
-          .getElementById("next")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[4]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("previous")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[2]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[3]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[3]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[3]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[3]["image"]["credit"]}">here</a>.`
-      } else if (slideIndex == 4) {
-        document
-          .getElementById("next")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[5]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("previous")
-          .addEventListener("click", () => {
-            map.flyToBounds([            
-              Object.values(oxfordLocations.id[3]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[4]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[4]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[4]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[4]["image"]["credit"]}">here</a> and was originally taken by Vinesh Rajpaul.`
-      } else if (slideIndex == 5) {
-        document
-          .getElementById("next")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[6]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("previous")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[4]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[5]["name"]}`, 
-          document.getElementById("tour-image").src = oxfordLocations.id[5]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[5]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[5]["image"]["credit"]}">here</a>.`
-      } else if (slideIndex == 6) {
-        document
-          .getElementById("next")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[7]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("previous")
-          .addEventListener("click", () => {
-            map.flyToBounds([
-              Object.values(oxfordLocations.id[5]["latlng"])
-            ]);
-          }),
-          document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[6]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[6]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[6]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[6]["image"]["credit"]}">here</a>.`
-      } else if (slideIndex == 7) {
-        document
-        .getElementById("next")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[8]["latlng"])
-          ])
-        }),
-        document
-        .getElementById("previous")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[6]["latlng"])
-          ])
-        }),
-        document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[7]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[7]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[7]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[7]["image"]["credit"]}">here</a>, by Meraj Chhaya - Tom Tower in Christ Church College, CC BY 2.0, .`
-      } else if (slideIndex == 8) {
-        document
-        .getElementById("next")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[9]["latlng"])
-          ])
-        }),
-        document
-        .getElementById("previous")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[7]["latlng"])
-          ])
-        }),
-        document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[8]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[8]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[8]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[8]["image"]["credit"]}">here</a>.`
-      } else if (slideIndex == 9) {
-        document
-        .getElementById("next")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[10]["latlng"])
-          ])
-        }),
-        document
-        .getElementById("previous")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[8]["latlng"])
-          ])
-        }),
-        document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[9]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[9]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[9]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[9]["image"]["credit"]}">here</a>.`
-      } else if (slideIndex == 10) {
-        document
-        .getElementById("next")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[11]["latlng"])
-          ])
-        }),
-        document
-        .getElementById("previous")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[9]["latlng"])
-          ])
-        }),
-        document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[10]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[10]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[10]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[10]["image"]["credit"]}">here</a>.`
-      } else if (slideIndex == 11) {
-        document
-        .getElementById("next")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[12]["latlng"])
-          ])
-        }),
-        document
-        .getElementById("previous")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[10]["latlng"])
-          ])
-        }),
-        document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[11]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[11]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[11]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[11]["image"]["credit"]}">here</a>, by Lewis Clarke, CC BY-SA 2.0, .`
-      } else if (slideIndex == 12) {
-        document
-        .getElementById("next")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[1]["latlng"])
-          ])
-        }),
-        document
-        .getElementById("previous")
-        .addEventListener("click", () => {
-          map.flyToBounds([
-            Object.values(oxfordLocations.id[11]["latlng"])
-          ])
-        }),
-        document
-          .getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[12]["name"]}`,
-          document.getElementById("tour-image").src = oxfordLocations.id[12]["image"]["src"];
-          document.getElementById("tour-image").alt = oxfordLocations.id[12]["image"]["alt"];
-          document.getElementById("image-creds").innerHTML = `Image found <a href="${oxfordLocations.id[12]["image"]["credit"]}">here</a>, by Prosthetic Head - Own work, CC BY-SA 4.0.`
-      }
+      slides[slideIndex].style.display = "block";
 
     }
 

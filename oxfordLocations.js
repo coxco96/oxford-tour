@@ -2,7 +2,7 @@ oxfordLocations = {
   id: {
 
 
-    1: {
+    0: {
       name: "Oxford",
       latlng: [
         [-504.3, 106.2],
@@ -17,7 +17,7 @@ oxfordLocations = {
       }
     },
 
-    2: {
+    1: {
       name: "All Souls",
       latlng: [
         [-303.6, 467.4],
@@ -32,7 +32,7 @@ oxfordLocations = {
       }
     },
 
-    3: {
+    2: {
       name: "Radcliffe Library",
       latlng: [
         [-295.5, 430.9],
@@ -47,7 +47,7 @@ oxfordLocations = {
       }
     },
 
-    4: {
+    3: {
       name: "Bodleian D.",
       latlng: [
         [-282.2, 448],
@@ -62,7 +62,7 @@ oxfordLocations = {
       }
     },
 
-    5: {
+    4: {
       name: "The Market",
       latlng: [
         [-288.7, 236.6],
@@ -77,7 +77,7 @@ oxfordLocations = {
       }
     },
 
-    6: {
+    5: {
       name: "Oxford Castle",
       latlng: [
         [-222.3, 36],
@@ -92,7 +92,7 @@ oxfordLocations = {
       }
     },
 
-    7: {
+    6: {
       name: "Christ Church College",
       latlng: [
         [-334.3, 144.4],
@@ -107,7 +107,7 @@ oxfordLocations = {
       }
     },
 
-    8: {
+    7: {
       name: "Corpus Christi College",
       latlng: [
         [-371.2, 280.4],
@@ -122,7 +122,7 @@ oxfordLocations = {
       }
     },
 
-    9: {
+    8: {
       name: "New Printing Office",
       latlng: [
         [-180.1, 279.9],
@@ -137,7 +137,7 @@ oxfordLocations = {
       }
     },
 
-    10: {
+    9: {
       name: "Martyrs Monument",
 
       latlng: [
@@ -153,7 +153,7 @@ oxfordLocations = {
       }
     },
 
-    11: {
+    10: {
       name: "Ashmolean Museum",
 
       latlng: [
@@ -169,7 +169,7 @@ oxfordLocations = {
       }
     },
 
-    12: {
+    11: {
       name: "The Theatre",
 
       latlng: [
