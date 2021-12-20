@@ -171,13 +171,22 @@ oxfordLocations = {
     },
 
     11: {
-      name: "The Theatre (#59)",
+      name: "Your turn to explore.",
 
       latlng: [
         [-247.9, 478.7],
         [-165.6, 593.4]
       ],
-      description: "",
+      description: `Right now you sit on location #59, the Sheldonian Theatre.<br>
+      You can click and drag the map around and zoom in or out. Take a moment to explore.<br>
+      Even though this map was drawn in 1850, it still holds valuable information for us today. Maybe you wouldn't use this map to navigate around Oxford, but it still serves a purpose after all this time. We can use this drawing to explore history. By digitizing this map, we have brought it to life and created a new way to experience 19th-century Oxford. At the time of this map's creation, cartographer Nathaniel Whittock didn't have access to planes, drones, or Google Maps for reference. This map differs from what we understand as a useful map today, yet it was the perfect tool for an imaginative digital tour.<br>
+      In an essay titled "Persuasive Cartography," Judith Tyner writes about how all maps are biased. She writes, "The cartographer's intent is most easily identified in the text and title of a map."<br>
+      The original title of Whittock's map is "University and city of Oxford," or, the alternate title, "The key to the bird's-eye view of the University and city of Oxford." What we can understand from this title and this map is a strong truth about Oxford. The city and the university are integrated. The city is the university, and the university is the city, and even what technically does not overlap exists in a life that inevitably overlaps.<br>
+      When I spent a semester studying at Oxford in 2018, I noticed the culture of literature all through the city. Every day, I took a bus into the city centre, and the bus driver picked up a book to read a page at each stop. I studied in coffee shops and watched middle school aged girls come in to study in a way I had not seen for myself until college age.<br>
+      Whittock captures a truth in his map that remains fully intact now, over 150 years later. His map asserts an opinion on the relationship between a city and its university--persuasive cartography, if you will.<br>
+      As you explore this map, do you trust it? Do you see it as an object of authority? It probably knows more about Oxford than you or I do, right? Therefore, to a large degree, you and I trust this map. We don't even have much of a choice in that matter of trust.  Denis Wood wrote a profound essay on the authority of maps--<i>What makes a map a map?</i><br>
+      "<i>Where  does  the  map's  authority  come  from?  It  arises  di­rectly  from  the  certainty  guaranteed  by  the  map's  object  quality,  by  its  being  ...  a  thing in  the  world  (once  I  have accepted  it  as  a  thing  in  the  world  it  takes  on  the  same  natural  quality  as  other  things  in  the  world,  rocks,  stars,  trees)</i>," Wood writes.<br>
+      Though I have never hand drawn a map--perhaps with some childhood exceptions--I make maps. In a way, this digital tour is a map that is different from the map Whittock drew. Whittock's map is a map now, and it will still be a map in 500 years, possessing the authority to demonstrate 19th-century Oxford.`,
       mapNum: 59,
       image: {
         src: "images/id12.jpg",
@@ -186,6 +195,24 @@ oxfordLocations = {
       }
     }
 
+    // 12: {
+    //   name: "The Theatre (#59)",
+
+    //   latlng: [
+    //     [-247.9, 478.7],
+    //     [-165.6, 593.4]
+    //   ],
+    //   description: "",
+    //   mapNum: 59,
+    //   image: {
+    //     src: "images/id12.jpg",
+    //     alt: "",
+    //     credit: "Image found <a href= 'https://en.wikipedia.org/wiki/Sheldonian_Theatre#/media/File:Oxford_Building_Sunset.jpg'>here</a>."
+    //   }
+    // }
+
 
   }
 }
+
+
