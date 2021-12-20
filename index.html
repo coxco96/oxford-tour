@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin="" />
+  <link rel="stylesheet" href="https://use.typekit.net/olu7kdk.css">
   <style>
     body {
       margin: 0;
@@ -15,13 +16,21 @@
     }
 
     h1 {
-      font-family: 'Courier New', Courier, monospace;
+      font-family: 'contralto-big', sans-serif;
+      font-size: 32px;
+    }
+
+    h2 {
+      font-family: 'contralto-big', sans-serif;
+      font-size: 24px;
     }
 
     #container {
       display: flex;
       flex-direction: row;
       width: 100%;
+      height: 100vh;
+      overflow: hidden;
     }
 
     #iiif-map {
@@ -33,9 +42,12 @@
 
     #info-column {
       width: 20%;
-      color: black;
+      /* color: black; */
       background-color: #DFCBB0;
       padding: 1em;
+      margin: 0 0 0 20px;
+      overflow: scroll;
+      height: 100vh;
     }
 
     #current-view {
@@ -49,17 +61,19 @@
       /* change display to show current bounds of map view */
     }
 
-    #ui {
-      position: absolute;
+    /* #ui {
+      position: relative;
       right: 12px;
       bottom: 12px;
       z-index: 1000;
-    }
+    } */
 
     .back-and-forth {
       text-decoration: none;
       display: inline-block;
-      padding: 8px 16px;
+      padding: 4px 8px;
+      margin: 5px 5px 5px 0;
+      text-align: center;
     }
 
     .back-and-forth:hover {
@@ -68,21 +82,32 @@
     }
 
     #previous,
-    #next {
+    #next,
+    #ui {
       cursor: pointer;
       width: auto;
-      color: BLACK;
+      /* color: BLACK; */
       font-weight: bold;
+      border: .5px solid;
       font-size: 18px;
       border-radius: 0 3px 3px 0;
       user-select: none;
+      font-family: "contralto-big", sans-serif;
     }
 
+    #ui {
+      margin: 0 0 30px 0;
+      padding: 0;
+    }
 
+    #buttons {
+      text-align: left;
+      margin: 0 0 30px 0;
+    }
 
     .tour-location {
       display: none;
-      font-family: monospace;
+      font-family: "contralto-big", sans-serif;
     }
 
     img {
@@ -109,6 +134,12 @@
 
     figcaption {
       text-align: center;
+      font-family: "contralto-big", sans-serif;
+      margin: 0 0 10px 0;
+    }
+
+    #description {
+      font-family: "contralto-big", sans-serif;
     }
   </style>
 </head>
@@ -119,52 +150,47 @@
     <div id="info-column">
 
       <h1 id="welcome">Take a tour of the city of Oxford and its unviersity.</h1>
-      <div id="back-and-forth">
-        <a class="back-and-forth" href="#" id="previous" onclick="plusSlides(-1)">&#8249; Previous</a>
-        <a class="back-and-forth" href="#" id="next" onclick="plusSlides(1)">Next &#8250;</a>
-      </div>
+ 
+      
       <figure id="main-image">
         <img id="tour-image" src="images/id1.jpg">
         <figcaption id="image-creds">Image found <a href="#">here</a>.</figcaption>
       </figure>
+      
+      <div id="description"></div>
+
+      <div id="buttons">
+        <button class="back-and-forth" href="#" id="previous" onclick="plusSlides(-1)">&#8249; Previous</button>
+        <button class="back-and-forth" href="#" id="next" onclick="plusSlides(1)">Next &#8250;</button>
+       <button id="ui">
+          <div id="zoom-to-full-screen" class="back-and-forth">Back to full screen map</div>
+       </button>
+      </div>
+      
 
 
-
       <div class="tour-location">
-        <div class="text">first one</div>
       </div>
       <div class="tour-location">
-        <div class="text">second one</div>
       </div>
       <div class="tour-location">
-        <div class="text">third one</div>
       </div>
       <div class="tour-location">
-        <div class="text">fourth one</div>
       </div>
       <div class="tour-location">
-        <div class="text">fifth one</div>
       </div>
       <div class="tour-location">
-        <div class="text">sixth one</div>
       </div>
       <div class="tour-location">
-        <div class="text">seventh one</div>
+      </div>
       </div>
       <div class="tour-location">
-        <div class="text">eighth one</div>
       </div>
       <div class="tour-location">
-        <div class="text">ninth one</div>
       </div>
       <div class="tour-location">
-        <div class="text">tenth one</div>
       </div>
       <div class="tour-location">
-        <div class="text">eleventh one</div>
-      </div>
-      <div class="tour-location">
-        <div class="text">twelfth one</div>
       </div>
 
 
@@ -172,7 +198,6 @@
     </div>
 
 
-    <!-- uncomment to show current bounds: -->
 
     <div id="current-view">
       Current bounds:<br />
@@ -180,9 +205,7 @@
     </div>
 
 
-    <div id="ui">
-      <button id="zoom-to-full-screen">Back to full screen map</button>
-    </div>
+    
 
 
 
@@ -264,7 +287,7 @@
 
       for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
-        console.log(slideIndex);
+       // console.log(slideIndex);
         if (slideIndex == i) {
           document
             .getElementById("next")
@@ -288,7 +311,8 @@
               if (i == 0) {
                 map.flyToBounds([
                   Object.values(oxfordLocations.id[slides.length - 1]["latlng"])
-                ])
+                ]);
+
                 // if you're not on the first location
               } else {
                 map.flyToBounds([
@@ -298,16 +322,15 @@
 
 
             }),
-          document.getElementById("welcome").innerHTML = `Welcome to ${oxfordLocations.id[i]["name"]}`;
+          document.getElementById("welcome").innerHTML = oxfordLocations.id[i]["name"];
+          document.getElementById("description").innerHTML = oxfordLocations.id[i]["description"];
           document.getElementById("tour-image").src = oxfordLocations.id[i]["image"]["src"];
           document.getElementById("tour-image").alt = oxfordLocations.id[i]["image"]["alt"];
           document.getElementById("image-creds").innerHTML =
-            `Image found <a href="${oxfordLocations.id[i]["image"]["credit"]}">here</a>.`
+            `${oxfordLocations.id[i]["image"]["credit"]}`
         }
       }
 
-
-      console.log(slideIndex);
       slides[slideIndex].style.display = "block";
 
     }
